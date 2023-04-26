@@ -16,7 +16,7 @@ import oracle.jdbc.pool.OracleDataSource;
 
 public class ConnectDB {
 
-	final static String DB_URL = "jdbc:oracle:thin:@capstoneDB_medium?TNS_ADMIN=C:/wallet/Wallet_capstoneDB";
+	final static String DB_URL = "jdbc:oracle:thin:@capstonedb_medium?TNS_ADMIN=C:/wallet/Wallet_capstoneDB";
 
 	final static String DB_USER = "admin";
 	final static String DB_PASSWORD = "Rheodml123!!";

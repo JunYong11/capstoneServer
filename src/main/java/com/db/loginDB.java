@@ -16,7 +16,7 @@ import oracle.jdbc.pool.OracleDataSource;
 
 public class loginDB {
 
-	final static String DB_URL = "jdbc:oracle:thin:@capstoneDB_medium?TNS_ADMIN=C:/wallet/Wallet_capstoneDB";
+	final static String DB_URL = "jdbc:oracle:thin:@capstonedb_medium?TNS_ADMIN=C:/wallet/Wallet_capstoneDB";
 
 	final static String DB_USER = "admin";
 	final static String DB_PASSWORD = "Rheodml123!!";
@@ -60,8 +60,6 @@ public class loginDB {
 		}
 	}
 	
-	
-	
 
 	/*
 	 * Displays first_name and last_name from the employees table.
@@ -72,12 +70,11 @@ public class loginDB {
 	            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 	            String sql = "SELECT NICKNAME FROM 사용자 WHERE id = ? and pw = ?";
 
-	            pstmt = conn.prepareStatement(sql);	
+	            pstmt = conn.prepareStatement(sql);
 	            pstmt.setString(1, id);
 	            pstmt.setString(2, pw);
 	         
 	            ResultSet rs = pstmt.executeQuery();
-	            ResultSet rs2 = pstmt2.executeQuery();
 	            if (rs.next()) {
 	            	String name = rs.getString(1);
 	            	returns = "로그인 성공!" + name;
