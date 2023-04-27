@@ -16,7 +16,7 @@ import oracle.jdbc.pool.OracleDataSource;
 
 public class findInfo {
 
-	final static String DB_URL = "jdbc:oracle:thin:@shortcut_medium?TNS_ADMIN=C:/wallet/Wallet_shortcut";
+	final static String DB_URL = "jdbc:oracle:thin:@capstonedb_medium?TNS_ADMIN=C:/wallet/Wallet_capstoneDB";
 
 	final static String DB_USER = "admin";
 	final static String DB_PASSWORD = "Rheodml123!!";
@@ -73,7 +73,7 @@ public class findInfo {
 	            Class.forName("oracle.jdbc.driver.OracleDriver");
 	            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
-	            String sql = "SELECT id FROM ACCOUNT WHERE nickname = ? and ans = ? and spn = ?";
+	            String sql = "SELECT id FROM 사용자 WHERE nickname = ? and ans = ? and spn = ?";
 	            pstmt = conn.prepareStatement(sql);	
 	            pstmt.setString(1, info);
 	            pstmt.setString(2, ans);
@@ -100,7 +100,7 @@ public class findInfo {
 		            Class.forName("oracle.jdbc.driver.OracleDriver");
 		            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
-		            String sql = "SELECT pw FROM ACCOUNT WHERE id = ? and ans = ? and spn = ?";
+		            String sql = "SELECT pw FROM 사용자 WHERE id = ? and ans = ? and spn = ?";
 		            pstmt = conn.prepareStatement(sql);	
 		            pstmt.setString(1, info);
 		            pstmt.setString(2, ans);
