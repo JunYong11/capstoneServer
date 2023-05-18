@@ -1,22 +1,20 @@
-<%@page import="com.db.loginInfo"%>
+<%@page import="com.db.durationInfo"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%
-   loginInfo DB = loginInfo.getInstance();
+   durationInfo duration = durationInfo.getInstance();
 
 	request.setCharacterEncoding("utf-8");
 	response.setContentType("text/html; charset=UTF-8");
 
-   String id = request.getParameter("id");
-   String pw = request.getParameter("pw");
+   String dName = request.getParameter("dName");
 
    
-   String returns = DB.ConDB(id, pw);
+   String returns = duration.connectionDB(dName);
 
-   System.out.println("id="+id+"pw="+pw);
+   System.out.println("dName="+dName);
    System.out.println(returns);
 
    // 안드로이드로 전송
    out.println(returns);
-
 %>

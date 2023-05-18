@@ -1,22 +1,20 @@
-<%@page import="com.db.loginInfo"%>
+<%@page import="com.db.searchInfo"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%
-   loginInfo DB = loginInfo.getInstance();
+   searchInfo search = searchInfo.getInstance();
 
 	request.setCharacterEncoding("utf-8");
 	response.setContentType("text/html; charset=UTF-8");
 
-   String id = request.getParameter("id");
-   String pw = request.getParameter("pw");
+   String keyword = request.getParameter("keyword");
 
    
-   String returns = DB.ConDB(id, pw);
+   String returns = search.connectionDB(keyword);
 
-   System.out.println("id="+id+"pw="+pw);
+   System.out.println("keyword="+keyword);
    System.out.println(returns);
 
    // 안드로이드로 전송
    out.println(returns);
-
 %>

@@ -14,7 +14,7 @@ import org.apache.catalina.connector.Connector;
 import oracle.jdbc.OracleConnection;
 import oracle.jdbc.pool.OracleDataSource;
 
-public class loginDB {
+public class findInfo {
 
 	final static String DB_URL = "jdbc:oracle:thin:@capstonedb_medium?TNS_ADMIN=C:/wallet/Wallet_capstoneDB";
 
@@ -24,19 +24,19 @@ public class loginDB {
 	PreparedStatement pstmt;
 	PreparedStatement pstmt2;
 	
-	private static loginDB instance = new loginDB();
-	
+	private static findInfo instance = new findInfo();
     String returns = "a";
 	
-	public loginDB(){
+	public findInfo(){
 		
 	}
 	
-	 public static loginDB getInstance() {
+	 public static findInfo getInstance() {
 	        return instance;
 	 }
 	
 	public void start() throws SQLException {
+
 		Properties info = new Properties();
 		info.put(OracleConnection.CONNECTION_PROPERTY_USER_NAME, DB_USER);
 		info.put(OracleConnection.CONNECTION_PROPERTY_PASSWORD, DB_PASSWORD);
@@ -60,27 +60,30 @@ public class loginDB {
 		}
 	}
 	
+	
+	
 
 	/*
 	 * Displays first_name and last_name from the employees table.
 	 */
-	 public String ConDB(String id, String pw) {
+	 public String connectionDB(String info, String spn, String ans, String check) {
+		 
+		 if(check.equals("0")) {
 	        try {
 	            Class.forName("oracle.jdbc.driver.OracleDriver");
 	            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-	            String sql = "SELECT NICKNAME FROM 사용자 WHERE id = ? and pw = ?";
 
-	            pstmt = conn.prepareStatement(sql);
-	            pstmt.setString(1, id);
-	            pstmt.setString(2, pw);
-	         
+	            String sql = "SELECT id FROM 사용자 WHERE nickname = ? and ans = ? and spn = ?";
+	            pstmt = conn.prepareStatement(sql);	
+	            pstmt.setString(1, info);
+	            pstmt.setString(2, ans);
+	            pstmt.setString(3, spn);
+
 	            ResultSet rs = pstmt.executeQuery();
 	            if (rs.next()) {
-	            	String name = rs.getString(1);
-	            	returns = "로그인 성공!" + name;
-	            } 
-	            else {
-	                returns = "아이디 또는 비밀번호를 확인해주세요...";
+	                returns = "ID는 " + rs.getString(1)+"입니다.";
+	            } else {
+	                returns = "존재하지 않는 정보입니다.";
 	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();
@@ -91,5 +94,32 @@ public class loginDB {
 	        }
 	        return returns;
 	    }
-	 
+		 
+		 else {
+		        try {
+		            Class.forName("oracle.jdbc.driver.OracleDriver");
+		            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+
+		            String sql = "SELECT pw FROM 사용자 WHERE id = ? and ans = ? and spn = ?";
+		            pstmt = conn.prepareStatement(sql);	
+		            pstmt.setString(1, info);
+		            pstmt.setString(2, ans);
+		            pstmt.setString(3, spn);
+
+		            ResultSet rs = pstmt.executeQuery();
+		            if (rs.next()) {
+		                returns = "PW는 " + rs.getString(1)+"입니다.";
+		            } else {
+		                returns = "존재하지 않는 정보입니다.";
+		            }
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        } finally {
+		            if (pstmt2 != null)try {pstmt2.close();    } catch (SQLException ex) {}
+		            if (pstmt != null)try {pstmt.close();} catch (SQLException ex) {}
+		            if (conn != null)try {conn.close();    } catch (SQLException ex) {    }
+		        }
+		        return returns;
+		 }
+	 }
 }
