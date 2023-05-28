@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-import org.apache.catalina.connector.Connector;
 
 import oracle.jdbc.OracleConnection;
 import oracle.jdbc.pool.OracleDataSource;
@@ -17,7 +16,6 @@ import oracle.jdbc.pool.OracleDataSource;
 public class findInfo {
 
 	final static String DB_URL = "jdbc:oracle:thin:@capstonedb_medium?TNS_ADMIN=C:/wallet/Wallet_capstoneDB";
-
 	final static String DB_USER = "admin";
 	final static String DB_PASSWORD = "Rheodml123!!";
 	Connection conn = null;

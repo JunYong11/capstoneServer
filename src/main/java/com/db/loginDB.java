@@ -9,12 +9,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-import org.apache.catalina.connector.Connector;
 
 import oracle.jdbc.OracleConnection;
 import oracle.jdbc.pool.OracleDataSource;
 
-public class loginInfo {
+public class loginDB {
 
 	final static String DB_URL = "jdbc:oracle:thin:@capstonedb_medium?TNS_ADMIN=C:/wallet/Wallet_capstoneDB";
 
@@ -24,15 +23,15 @@ public class loginInfo {
 	PreparedStatement pstmt;
 	PreparedStatement pstmt2;
 	
-	private static loginInfo instance = new loginInfo();
+	private static loginDB instance = new loginDB();
 	
     String returns = "a";
 	
-	public loginInfo(){
+	public loginDB(){
 		
 	}
 	
-	 public static loginInfo getInstance() {
+	 public static loginDB getInstance() {
 	        return instance;
 	 }
 	

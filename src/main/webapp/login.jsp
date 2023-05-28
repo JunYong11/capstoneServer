@@ -1,8 +1,8 @@
-<%@page import="com.db.loginInfo"%>
+<%@page import="com.db.loginDB"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%
-   loginInfo DB = loginInfo.getInstance();
+   loginDB DB = loginDB.getInstance();
 
 	request.setCharacterEncoding("utf-8");
 	response.setContentType("text/html; charset=UTF-8");

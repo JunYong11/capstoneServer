@@ -1,31 +1,32 @@
 package com.db;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.Base64;
 import java.util.Properties;
-
-import org.apache.catalina.connector.Connector;
 
 import oracle.jdbc.OracleConnection;
 import oracle.jdbc.pool.OracleDataSource;
-
 public class healthInfo {
 
 	final static String DB_URL = "jdbc:oracle:thin:@capstonedb_medium?TNS_ADMIN=C:/wallet/Wallet_capstoneDB";
 
 	final static String DB_USER = "admin";
 	final static String DB_PASSWORD = "Rheodml123!!";
-	String data="";
+
+	String data[] = new String[8];
 	Connection conn = null;
 	PreparedStatement pstmt;
 	PreparedStatement pstmt2;
 	String cut="㉾";
-	String line="▤";
+	String line="㉿";
 	
 	
 	private static healthInfo instance = new healthInfo();
@@ -65,27 +66,31 @@ public class healthInfo {
 	}
 	
 	
-	
-
 	/*
 	 * Displays first_name and last_name from the employees table.
 	 */
-	 public String connectionDB(String part) {
+	 public String[] connectionDB(String part) {
 	        try {
 	            Class.forName("oracle.jdbc.driver.OracleDriver");
 	            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
-	            String sql = "SELECT 질환명,정의,원인,증상,진단,치료,경과,주의사항 FROM 질환 WHERE 부위 = ?";
+	            String sql = "SELECT 질환명,정의,원인,증상,진단,치료,경과,주의사항 FROM 질환 WHERE 질환명 = ?";
 	            pstmt = conn.prepareStatement(sql);	
 	            pstmt.setString(1, part);
 	            
-
 	            ResultSet rs = pstmt.executeQuery();
 	            while(rs.next()) {
-	            	data+=rs.getString(1)+cut+rs.getString(2)+cut+rs.getString(3)+cut+rs.getString(4)+cut+rs.getString(5)+cut+rs.getString(6)+cut+rs.getString(7)+cut+rs.getString(8)+line;
+	            	//data+=rs.getString(1)+cut+rs.getString(2)+cut+rs.getString(3)+cut+rs.getString(4)+cut+rs.getString(5)+cut+rs.getString(6)+cut+rs.getString(7)+cut+rs.getString(8)+line;
+	            	data[0] = rs.getString(1);
+	            	data[1] = rs.getString(2);
+	            	data[2] = rs.getString(3);
+	            	data[3] = rs.getString(4);
+	            	data[4] = rs.getString(5);
+	            	data[5] = rs.getString(6);
+	            	data[6] = rs.getString(7);
+	            	data[7] = rs.getString(8);
+	            	
 	            }
-                
-                returns = data;
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        } finally {
@@ -93,7 +98,6 @@ public class healthInfo {
 	            if (pstmt != null)try {pstmt.close();} catch (SQLException ex) {}
 	            if (conn != null)try {conn.close();    } catch (SQLException ex) {    }
 	        }
-	        return returns;
+	        return data;
 	    }
-	 
 }
