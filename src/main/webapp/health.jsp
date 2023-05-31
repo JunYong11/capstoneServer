@@ -15,11 +15,19 @@
 	
    System.out.println("part="+part);
 
-   for(int j=0;j<8;j++){
-	   System.out.println(returns[j]);   
-	   out.println(returns[j]);   
-   }
+   
+	try{
+	for(int j=0;j<8;j++){
+	 System.out.println(returns[j]);   
+	 out.println(returns[j]);   
+	}
 	
 	out.flush();
-	out.close();
+	out.close();	
+	}catch(IOException e){
+		System.out.println("healthInfo 전송완료");
+	}
+	
+	
+	
 %>

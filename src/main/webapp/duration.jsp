@@ -13,8 +13,7 @@
    String returns = duration.connectionDB(dName);
 
    System.out.println("dName="+dName);
-   System.out.println(returns);
-
-   // 안드로이드로 전송
-   out.println(returns);
+	System.out.println(returns);
+	//전송할 필요 없음(값만 키워주면 됨)
+	out.println("완료");
 %>

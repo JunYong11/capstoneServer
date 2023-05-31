@@ -9,31 +9,29 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+
 import oracle.jdbc.OracleConnection;
 import oracle.jdbc.pool.OracleDataSource;
 
-public class searchInfo {
+public class rankingInfo {
 
 	final static String DB_URL = "jdbc:oracle:thin:@capstonedb_medium?TNS_ADMIN=C:/wallet/Wallet_capstoneDB";
 
 	final static String DB_USER = "admin";
 	final static String DB_PASSWORD = "Rheodml123!!";
-	String data="";
 	Connection conn = null;
 	PreparedStatement pstmt;
 	PreparedStatement pstmt2;
 	String cut="㉾";
-	String line="▤";
 	
-	
-	private static searchInfo instance = new searchInfo();
+	private static rankingInfo instance = new rankingInfo();
     String returns = "a";
 	
-	public searchInfo(){
+	public rankingInfo(){
 		
 	}
 	
-	 public static searchInfo getInstance() {
+	 public static rankingInfo getInstance() {
 	        return instance;
 	 }
 	
@@ -68,21 +66,33 @@ public class searchInfo {
 	/*
 	 * Displays first_name and last_name from the employees table.
 	 */
-	 public String connectionDB(String keyword) {
+	 public String connectionDB() {
+		 int dNum[] = new int[10];
+		 int i;
+		 String data = "";
 	        try {
 	            Class.forName("oracle.jdbc.driver.OracleDriver");
 	            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-	            keyword = '%' + keyword + '%';
-	            String sql = "SELECT 질환명,정의,원인,증상,진단,치료,경과,주의사항 FROM 질환 WHERE 질환명 LIKE ?";
+
+	            String sql = "SELECT 질환번호,빈도수 FROM (SELECT 질환번호,빈도수, DENSE_RANK() OVER(ORDER BY 빈도수) as rnk from 빈도) WHERE rnk <10 ORDER BY 빈도수 DESC";
 	            pstmt = conn.prepareStatement(sql);	
-	            pstmt.setString(1, keyword);
-	            
 	            ResultSet rs = pstmt.executeQuery();
+	            i=0;
 	            while(rs.next()) {
-	            	data+=rs.getString(1)+cut+rs.getString(2)+cut+rs.getString(3)+cut+rs.getString(4)+cut+rs.getString(5)+cut+rs.getString(6)+cut+rs.getString(7)+cut+rs.getString(8)+line;
+	            	dNum[i++] = rs.getInt(1);
 	            }
-                
-                returns = data;
+	            
+	            String sql2 = "SELECT 질환명 FROM 질환 WHERE 질환번호 = ?";
+	            pstmt = conn.prepareStatement(sql2);
+	            for(int j=0;j<i;j++) {
+	            	pstmt.setInt(1, dNum[j]);
+	            	rs = pstmt.executeQuery();
+	            	if(rs.next()) {
+	            		data += rs.getString(1) + cut;
+	            	}
+	            }
+	            
+	            returns = data;
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        } finally {

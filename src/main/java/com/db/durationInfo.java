@@ -19,7 +19,6 @@ public class durationInfo {
 
 	final static String DB_USER = "admin";
 	final static String DB_PASSWORD = "Rheodml123!!";
-	String data="";
 	Connection conn = null;
 	PreparedStatement pstmt;
 	PreparedStatement pstmt2;
@@ -67,25 +66,39 @@ public class durationInfo {
 	 * Displays first_name and last_name from the employees table.
 	 */
 	 public String connectionDB(String dName) {
+		 int dNum = 0;
 	        try {
 	            Class.forName("oracle.jdbc.driver.OracleDriver");
 	            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+
 	            String sql = "SELECT 질환번호 FROM 질환 WHERE 질환명 = ?";
-	            String sql2 = "SELECT 질환번호 FROM 빈도 WHERE 질환번호 = ?";
-	            String sql3 = "INSERT INTO 빈도 VALUES(?,?)";
 	            pstmt = conn.prepareStatement(sql);	
 	            pstmt.setString(1, dName);
 	            
+
 	            ResultSet rs = pstmt.executeQuery();
-	            if(rs.next()) {
-	            	// 값 1 증가
+	            if (rs.next()) { //질환명에 해당하는 질환번호를 찾아서 dNum에 저장
+	                dNum = rs.getInt(1);
 	            }
-	            else {
-	            	// 빈도 인서트
-	            }
+	            System.out.println("dNum="+dNum);
+	            String search = "SELECT 질환번호 FROM 빈도 WHERE 질환번호 = ?"; //질환번호가 이미 빈도 테이블에 저장된 질환번호인지 확인
+	            pstmt2 = conn.prepareStatement(search);
+	            pstmt2.setInt(1, dNum);
+	            pstmt2.executeUpdate();
+	            rs = pstmt2.executeQuery();
 	            
-                
-                returns = data;
+	            if(rs.next()) { //존재한다면 값을 1올리는 업데이트 쿼리문 사용
+		            String sql2 = "update 빈도 set 빈도수 = 빈도수+1 where 질환번호 = ?";
+	                pstmt2 = conn.prepareStatement(sql2);
+	                pstmt2.setInt(1, dNum);
+	                pstmt2.executeUpdate();
+	            }
+	            else { //존재하지않는다면 새로삽입 초기값은 1
+	            	String sql2 = "insert into 빈도 values(?,1)";
+	                pstmt2 = conn.prepareStatement(sql2);
+	                pstmt2.setInt(1, dNum);
+	                pstmt2.executeUpdate();
+	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        } finally {
