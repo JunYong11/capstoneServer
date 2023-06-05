@@ -74,7 +74,7 @@ public class rankingInfo {
 	            Class.forName("oracle.jdbc.driver.OracleDriver");
 	            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
-	            String sql = "SELECT 질환번호,빈도수 FROM (SELECT 질환번호,빈도수, DENSE_RANK() OVER(ORDER BY 빈도수) as rnk from 빈도) WHERE rnk <10 ORDER BY 빈도수 DESC";
+	            String sql = "SELECT 질환번호,빈도수 FROM (SELECT 질환번호,빈도수, DENSE_RANK() OVER(ORDER BY 빈도수) as rnk from 빈도) where ROWNUM<=10 ORDER BY 빈도수 DESC";
 	            pstmt = conn.prepareStatement(sql);	
 	            ResultSet rs = pstmt.executeQuery();
 	            i=0;
