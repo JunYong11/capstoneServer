@@ -4,18 +4,17 @@
 <%
    QueDB queDB = QueDB.getInstance();
 
-	request.setCharacterEncoding("utf-8");
-	response.setContentType("text/html; charset=UTF-8");
+   request.setCharacterEncoding("utf-8");
+   response.setContentType("text/html; charset=UTF-8");
 
    String name = request.getParameter("NM");
    String result = request.getParameter("RT");
-   
-   
+
+   // 데이터 삽입
    String returns = queDB.connectionDB(name, result);
 
-   System.out.println("이름="+name+"증상="+result);
-   System.out.println(returns);
-
-   // 안드로이드로 전송
+   System.out.println("이름=" + name);
+   System.out.println("증상=" + result);
+   
    out.println(returns);
 %>

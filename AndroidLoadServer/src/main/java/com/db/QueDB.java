@@ -2,12 +2,14 @@ package com.db;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+
 
 
 import oracle.jdbc.OracleConnection;
@@ -20,8 +22,12 @@ public class QueDB {
 	final static String DB_USER = "admin";
 	final static String DB_PASSWORD = "Rheodml123!!";
 	Connection conn = null;
+	Statement stmt = null;
+    ResultSet rs = null;
 	PreparedStatement pstmt;
 	PreparedStatement pstmt2;
+	int incrementedValue = 0;
+	int currentValue = 0;
 	
 	private static QueDB instance = new QueDB();
     String returns = "a";
@@ -67,26 +73,38 @@ public class QueDB {
 	 */
 	 public String connectionDB(String name, String result) {
 	        try {
-	            Class.forName("oracle.jdbc.driver.OracleDriver");
-	            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+	        	Class.forName("oracle.jdbc.driver.OracleDriver");
+	        	java.util.Date currentDate = new java.util.Date();
+	        	java.util.Date utilDate = new java.util.Date();
+	        	java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
-	            String sql = "SELECT 이름 FROM 문진 WHERE 이름 = ?";
-	            pstmt = conn.prepareStatement(sql);	
-	            pstmt.setString(1, name);
-	            
+	        	
+	        	
 
-	            ResultSet rs = pstmt.executeQuery();
-	            if (rs.next()) {
-	                returns = "이미 존재하는 아이디 입니다.";
-	            } 
-	            else {
-	                String sql2 = "INSERT INTO 사용자 VALUES(?,?)";
-	                pstmt2 = conn.prepareStatement(sql2);
-	                pstmt2.setString(1, name);
-	                pstmt2.setString(2, result);
-	                pstmt2.executeUpdate();
-	                returns = "회원 가입 성공 !";
-	            }
+	        	conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+	        	
+	        	String sql1 = "SELECT 순번 FROM 문진 ORDER BY 순번 DESC";
+	        	stmt = conn.createStatement();
+	        	rs = stmt.executeQuery(sql1);
+
+	        	if (rs.next()) {
+	        	    currentValue = rs.getInt("순번");
+	        	}	       	        	
+	        	incrementedValue = currentValue + 1;
+	        		     		        
+	       	    String sql2 = "INSERT INTO 문진 VALUES(?,?,?,?)";
+	        	pstmt2 = conn.prepareStatement(sql2);
+	        	pstmt2.setInt(1, incrementedValue);
+	        	pstmt2.setDate(2, sqlDate);
+	        	pstmt2.setString(3, name);
+	        	pstmt2.setString(4, result);
+	        	pstmt2.executeUpdate();
+
+	        	returns = "문진 데이터 추가 완료";
+
+	        	rs.close();
+	        	conn.close();
+	        	stmt.close();
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        } finally {
