@@ -9,12 +9,19 @@
 
    String name = request.getParameter("NM");
    String result = request.getParameter("RT");
-
-   // 데이터 삽입
-   String returns = queDB.connectionDB(name, result);
-
+   
    System.out.println("이름=" + name);
    System.out.println("증상=" + result);
+
+   // 데이터 삽입
+   String[] returns = queDB.connectionDB(name, result);
+
+   System.out.println("==============================의심되는 증상==============================");
+   for (String value : returns) {
+       System.out.println(value);
+   }
    
-   out.println(returns);
+   for (String value : returns) {
+       out.println(value);
+   }
 %>
