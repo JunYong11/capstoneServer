@@ -72,11 +72,21 @@ public class loginDB {
 	            pstmt = conn.prepareStatement(sql);
 	            pstmt.setString(1, id);
 	            pstmt.setString(2, pw);
-	         
+	            
 	            ResultSet rs = pstmt.executeQuery();
 	            if (rs.next()) {
 	            	String name = rs.getString(1);
 	            	returns = "로그인 성공!" + name;
+	            	
+		            sql = "SELECT 의심질병 FROM 문진정보 WHERE 이름 = ?";
+		            pstmt = conn.prepareStatement(sql);	
+		            pstmt.setString(1, name);
+		            
+		            rs = pstmt.executeQuery();
+		            if (rs.next()) { 
+		                String result = rs.getString(1);
+		                returns += "!" + result;
+		            }
 	            } 
 	            else {
 	                returns = "아이디 또는 비밀번호를 확인해주세요...";
