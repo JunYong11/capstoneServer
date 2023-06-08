@@ -78,7 +78,7 @@ public class ConnectDB {
 	            ResultSet rs = pstmt.executeQuery();
 	            if (rs.next()) {
 	                returns = "이미 존재하는 아이디 입니다.";
-	            } 
+	            }
 	            else {
 	                String sql2 = "INSERT INTO 사용자 VALUES(?,?,?,?,?)";
 	                pstmt2 = conn.prepareStatement(sql2);

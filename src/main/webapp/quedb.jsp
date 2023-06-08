@@ -18,5 +18,5 @@
 
    System.out.println("result ="+returns);
    out.println(returns);
- 
+ 	out.close();
 %>

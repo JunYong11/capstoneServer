@@ -17,4 +17,5 @@ myinfo info = myinfo.getInstance();
    System.out.println(returns);
    
    out.print(returns);
+	out.close();
 %>
