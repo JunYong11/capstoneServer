@@ -19,5 +19,5 @@
 
    // 안드로이드로 전송
    out.println(returns);
-
+	out.close();
 %>

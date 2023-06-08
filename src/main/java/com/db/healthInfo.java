@@ -74,9 +74,10 @@ public class healthInfo {
 	            Class.forName("oracle.jdbc.driver.OracleDriver");
 	            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
-	            String sql = "SELECT 질환명,정의,원인,증상,진단,치료,경과,주의사항 FROM 질환 WHERE 질환명 = ?";
+	            String sql = "SELECT 질환명,정의,원인,증상,진단,치료,경과,주의사항 FROM 질환 WHERE 질환명 LIKE ?";
+
 	            pstmt = conn.prepareStatement(sql);	
-	            pstmt.setString(1, part);
+	            pstmt.setString(1, "%" + part + "%");
 	            
 	            ResultSet rs = pstmt.executeQuery();
 	            while(rs.next()) {
@@ -89,7 +90,6 @@ public class healthInfo {
 	            	data[5] = rs.getString(6);
 	            	data[6] = rs.getString(7);
 	            	data[7] = rs.getString(8);
-	            	
 	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();
