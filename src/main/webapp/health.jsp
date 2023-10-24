@@ -4,11 +4,11 @@
     pageEncoding="utf-8"%>
 <%
    healthInfo health = healthInfo.getInstance();
-	String returns[] = new String[8];
+	String returns;
 	request.setCharacterEncoding("utf-8");
 	response.setContentType("text/html; charset=UTF-8");
 	
-   String part = request.getParameter("dName");
+   String part = request.getParameter("part");
    
    returns = health.connectionDB(part);
 	
@@ -17,17 +17,12 @@
 
    
 	try{
-	for(int j=0;j<8;j++){
-	 System.out.println(returns[j]);   
-	 out.println(returns[j]);   
-	}
-	
-	out.flush();
-	out.close();	
+	 System.out.println(returns);
+	 out.println(returns);   
+
+
 	}catch(IOException e){
 		System.out.println("healthInfo 전송완료");
 	}
-	
-	
 	
 %>

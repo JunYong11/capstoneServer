@@ -17,11 +17,9 @@
 
 	try{
 		out.println(returns);
-		out.close();	
 	}catch(IOException e){
 		System.out.println("ranking 전송완료");
 	}catch(IllegalStateException e){
 		System.out.println("ranking 전송완료");
 	}
-	
 %>

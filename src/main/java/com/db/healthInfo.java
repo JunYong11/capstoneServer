@@ -21,7 +21,7 @@ public class healthInfo {
 	final static String DB_USER = "admin";
 	final static String DB_PASSWORD = "Rheodml123!!";
 
-	String data[] = new String[8];
+	String data;
 	Connection conn = null;
 	PreparedStatement pstmt;
 	PreparedStatement pstmt2;
@@ -69,7 +69,8 @@ public class healthInfo {
 	/*
 	 * Displays first_name and last_name from the employees table.
 	 */
-	 public String[] connectionDB(String part) {
+	 public String connectionDB(String part) {
+		 data="";
 	        try {
 	            Class.forName("oracle.jdbc.driver.OracleDriver");
 	            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
@@ -81,15 +82,15 @@ public class healthInfo {
 	            
 	            ResultSet rs = pstmt.executeQuery();
 	            while(rs.next()) {
-	            	//data+=rs.getString(1)+cut+rs.getString(2)+cut+rs.getString(3)+cut+rs.getString(4)+cut+rs.getString(5)+cut+rs.getString(6)+cut+rs.getString(7)+cut+rs.getString(8)+line;
-	            	data[0] = rs.getString(1);
-	            	data[1] = rs.getString(2);
-	            	data[2] = rs.getString(3);
-	            	data[3] = rs.getString(4);
-	            	data[4] = rs.getString(5);
-	            	data[5] = rs.getString(6);
-	            	data[6] = rs.getString(7);
-	            	data[7] = rs.getString(8);
+	            	data+=rs.getString(1)+cut+rs.getString(2)+cut+rs.getString(3)+cut+rs.getString(4)+cut+rs.getString(5)+cut+rs.getString(6)+cut+rs.getString(7)+cut+rs.getString(8) + line;
+//	            	data[0] = rs.getString(1);
+//	            	data[1] = rs.getString(2);
+//	            	data[2] = rs.getString(3);
+//	            	data[3] = rs.getString(4);
+//	            	data[4] = rs.getString(5);
+//	            	data[5] = rs.getString(6);
+//	            	data[6] = rs.getString(7);
+//	            	data[7] = rs.getString(8);
 	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();
