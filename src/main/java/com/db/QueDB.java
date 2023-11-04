@@ -2,7 +2,7 @@ package com.db;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.Date;
+//import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +15,6 @@ import oracle.jdbc.OracleConnection;
 import oracle.jdbc.pool.OracleDataSource;
 
 public class QueDB {
-
     final static String DB_URL = "jdbc:oracle:thin:@capstonedb_medium?TNS_ADMIN=C:/wallet/Wallet_capstoneDB";
     final static String DB_USER = "admin";
     final static String DB_PASSWORD = "Rheodml123!!";
@@ -71,7 +70,7 @@ public class QueDB {
     	String ids_res = "";
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            java.util.Date currentDate = new java.util.Date();
+            //java.util.Date currentDate = new java.util.Date();
             java.util.Date utilDate = new java.util.Date();
             java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());            
             conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
@@ -84,7 +83,9 @@ public class QueDB {
                 currentValue = rs.getInt("순번");
             }
             incrementedValue = currentValue + 1;
-
+            
+            System.out.println("incrementedValue = "+incrementedValue);
+            
             String sql2 = "INSERT INTO 문진 VALUES(?,?,?,?)";
             pstmt2 = conn.prepareStatement(sql2);
             pstmt2.setInt(1, incrementedValue);
@@ -141,7 +142,7 @@ public class QueDB {
            
             int count = 0;
             for (Map.Entry<String, Integer> entry : sortedList) {
-                if (count < 5) {
+                if (count <5) {
                     ids_res += entry.getKey() + cut;
                     count++;
                 } else {
@@ -151,7 +152,6 @@ public class QueDB {
             
 
             
-            System.out.println("check1");
             String sql = "SELECT 이름 FROM 문진정보 where 이름 = ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, name);
@@ -162,8 +162,7 @@ public class QueDB {
                 pstmt2 = conn.prepareStatement(sql);
                 pstmt2.setString(1, ids_res);
                 pstmt2.setString(2, name);
-                pstmt2.executeUpdate();
-                System.out.println("check2" + "nickname = " + name);
+                pstmt2.executeUpdate();              
             }
             else {
 		        sql = "INSERT INTO 문진정보 VALUES(?,?)";
@@ -171,7 +170,6 @@ public class QueDB {
 		        pstmt2.setString(1, name);
 		        pstmt2.setString(2, ids_res);
 		        pstmt2.executeUpdate();
-		        System.out.println("check3");
             }
 
       
