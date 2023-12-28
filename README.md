@@ -5,9 +5,6 @@ Tomcat 서버에서 이용되는 Java & JSP 코드
 ### 프로젝트 인원 : 2명
 ### 역할 :
 - Tomcat 서버 구축
-- 로그인
-- 회원가입
-- ID/PW찾기
-- 질환백과사전
-- 자주찾는 질병정보 duration
-- 자주찾는 질병정보 rank
+- 문진표 QueDB
+- 내정보 myinfo
+- 의심 질병확인 Search
